@@ -36,7 +36,15 @@ router.post('/sign-up', async (req, res) => {
     req.body.password = hashedPassword;
   
     // All ready to create the new user!
-    await User.create(req.body);
+    // --  await User.create(req.body);
+    // BUT we want to also create a session/cookie
+    const userCreated = await User.create(req.body);
+    // initialize the session when the user signs up 
+     req.session.user = {
+      username: userInDatabase.username,
+      _id: userInDatabase._id
+    };
+
   
     res.redirect('/auth/sign-in');
   } catch (error) {
@@ -69,6 +77,7 @@ router.post('/sign-in', async (req, res) => {
       username: userInDatabase.username,
       _id: userInDatabase._id
     };
+    // initializing the session when a user is logged in - creating a cookie for the user 
   
     res.redirect('/');
   } catch (error) {

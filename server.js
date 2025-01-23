@@ -34,13 +34,14 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/vip-lounge', (req, res) => {
-  if (req.session.user) {
-    res.send(`Welcome to the party ${req.session.user.username}.`);
-  } else {
-    res.send('Sorry, no guests allowed.');
-  }
-});
+// example of how to protect a route 
+// app.get('/vip-lounge', (req, res) => {
+//   if (req.session.user) { // checking to see if uer is logged in - they have a cookie 
+//     res.send(`Welcome to the party ${req.session.user.username}.`);
+//   } else { // the user is not logged in - no cookie
+//     res.send('Sorry, no guests allowed.');
+//   }
+// });
 
 app.use('/auth', authController);
 
